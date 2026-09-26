@@ -32,17 +32,10 @@
       overflow-x: hidden;
     }
 
-    /* Warning Tape Banner */
     .banner {
       width: 100%;
       max-width: 900px;
-      background: repeating-linear-gradient(
-        45deg,
-        #000,
-        #000 10px,
-        var(--yellow) 10px,
-        var(--yellow) 20px
-      );
+      background: repeating-linear-gradient(45deg, #000, #000 10px, var(--yellow) 10px, var(--yellow) 20px);
       border: 2px solid var(--yellow);
       padding: 4px;
       margin-bottom: 20px;
@@ -58,13 +51,13 @@
       letter-spacing: 3px;
     }
 
-    /* Top HUD */
     .hud {
       width: 100%;
       max-width: 900px;
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
+      position: relative;
     }
     .team-badge {
       background: #1e1b4b;
@@ -75,6 +68,7 @@
       border-radius: 4px;
       color: #c7d2fe;
     }
+    .timer-container { position: relative; }
     .timer {
       background: #451a1a;
       border: 2px solid var(--red);
@@ -86,7 +80,24 @@
       text-shadow: 0 0 10px var(--red-glow);
     }
 
-    /* Main Container */
+    /* Floating Penalty Animation */
+    .penalty-pop {
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: var(--red);
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--red-glow);
+      pointer-events: none;
+      animation: floatUpFade 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      z-index: 100;
+    }
+    @keyframes floatUpFade {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-40px) scale(1.5); }
+    }
+
     .container {
       width: 100%;
       max-width: 900px;
@@ -97,7 +108,6 @@
       position: relative;
     }
 
-    /* Screens */
     .screen { display: none; flex-direction: column; align-items: center; width: 100%; }
     .screen.active { display: flex; }
 
@@ -131,6 +141,23 @@
       max-width: 400px;
     }
     .btn:hover { background: #b91c1c; box-shadow: 0 0 15px var(--red-glow); }
+
+    /* Screen 1.5: Briefing Instructions */
+    .briefing-box {
+      background: #000;
+      border: 1px solid var(--cyan);
+      padding: 20px;
+      border-radius: 4px;
+      margin-bottom: 25px;
+      width: 100%;
+      max-width: 600px;
+      color: #d1d5db;
+      line-height: 1.6;
+    }
+    .briefing-box h2 { color: var(--cyan); margin-bottom: 15px; text-align: center; }
+    .briefing-box ul { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+    .briefing-box li { margin-bottom: 8px; }
+    .highlight-red { color: var(--red); font-weight: bold; }
 
     /* Screen 2: Logic Gauntlet */
     .bit-tracker {
@@ -209,46 +236,10 @@
     .btn-bin:hover { border-color: var(--yellow); color: var(--yellow); }
 
     /* Screen 3: Hex Defusal */
-    .hex-display {
-      font-size: 2rem;
-      color: var(--green);
-      letter-spacing: 5px;
-      margin-bottom: 20px;
-      background: #000;
-      padding: 20px;
-      border: 1px solid var(--green);
-      border-radius: 4px;
-    }
-    .hex-input-box {
-      font-size: 3rem;
-      letter-spacing: 15px;
-      color: var(--yellow);
-      background: #000;
-      border: 2px solid var(--yellow);
-      padding: 10px 30px;
-      width: 300px;
-      text-align: center;
-      margin-bottom: 30px;
-      min-height: 80px;
-    }
-    .hex-keypad {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 400px;
-      width: 100%;
-    }
-    .key {
-      background: #262626;
-      border: 1px solid #404040;
-      color: #fff;
-      font-size: 1.5rem;
-      padding: 15px 0;
-      font-family: var(--mono);
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 4px;
-    }
+    .hex-display { font-size: 2rem; color: var(--green); letter-spacing: 5px; margin-bottom: 20px; background: #000; padding: 20px; border: 1px solid var(--green); border-radius: 4px; }
+    .hex-input-box { font-size: 3rem; letter-spacing: 15px; color: var(--yellow); background: #000; border: 2px solid var(--yellow); padding: 10px 30px; width: 300px; text-align: center; margin-bottom: 30px; min-height: 80px; }
+    .hex-keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 400px; width: 100%; }
+    .key { background: #262626; border: 1px solid #404040; color: #fff; font-size: 1.5rem; padding: 15px 0; font-family: var(--mono); font-weight: bold; cursor: pointer; border-radius: 4px; }
     .key:hover { background: #404040; }
     .key-action { background: #451a1a; color: var(--red); border-color: var(--red); }
     .key-action:hover { background: var(--red); color: #fff; }
@@ -256,20 +247,9 @@
     .key-submit:hover { background: var(--green); color: #fff; }
 
     /* Screen 4: Leaderboard */
-    .sync-status {
-      font-size: 1.2rem;
-      color: var(--cyan);
-      margin-bottom: 20px;
-      animation: pulse 1s infinite alternate;
-    }
-    @keyframes pulse { from { opacity: 0.5; } to { opacity: 1; } }
-
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
     th, td { border: 1px solid var(--border); padding: 12px; text-align: center; }
     th { background: #000; color: var(--yellow); }
-    .rank-1 { color: var(--yellow); font-weight: bold; }
-    .rank-2 { color: #d1d5db; font-weight: bold; }
-    .rank-3 { color: #b45309; font-weight: bold; }
 
     /* Screen Shake for Errors */
     .shake { animation: errorShake 0.4s cubic-bezier(.36,.07,.19,.97) both; border-color: var(--red); }
@@ -289,32 +269,45 @@
 
   <div class="hud">
     <div class="team-badge" id="teamBadgeDisplay">TEAM: AWAITING INPUT</div>
-    <div class="timer" id="timerDisplay">00:00:00</div>
+    <div class="timer-container">
+      <div class="timer" id="timerDisplay">00:00:00</div>
+    </div>
   </div>
 
   <div class="container" id="mainContainer">
     
     <!-- PHASE 1: Registration -->
     <div class="screen active" id="screenRegister">
-      <h1 style="color: var(--red); margin-bottom: 10px;">ENTER TEAM DESIGNATION</h1>
-      <p style="color: var(--text-muted); margin-bottom: 20px;">Timer will commence immediately upon activation.</p>
-      
+      <h1 style="color: var(--red); margin-bottom: 20px;">ENTER TEAM DESIGNATION</h1>
       <div class="input-group">
         <input type="text" id="teamNameInput" placeholder="TEAM NAME" autocomplete="off" maxlength="15">
-        <button class="btn" id="startBtn">ARM TIMER & START</button>
+        <button class="btn" id="proceedBtn">PROCEED TO BRIEFING</button>
       </div>
       <button class="btn" id="viewBoardBtn" style="background: #262626; color: #a3a3a3; margin-top: 20px;">VIEW GLOBAL LEADERBOARD</button>
+    </div>
+
+    <!-- PHASE 1.5: Briefing -->
+    <div class="screen" id="screenBriefing">
+      <div class="briefing-box">
+        <h2>MISSION BRIEFING</h2>
+        <p>A sabotage has been detected in the ship's logic routing mainframe. To restore autonomous navigation, you must bypass the lock manually.</p>
+        <ul>
+          <li><strong>PHASE 1:</strong> Evaluate 16 corrupted hardware logs. Mentally calculate the Boolean output (1 or 0) for each equation without scratch paper.</li>
+          <li><strong>PHASE 2:</strong> Collect all 16 bits and convert the binary payload into a 4-digit Hexadecimal defusal code.</li>
+          <li class="highlight-red">PENALTY RULE: Every incorrect bit or failed hex upload will instantly add +30 SECONDS to your total time.</li>
+        </ul>
+        <p style="text-align: center; margin-top: 15px; color: var(--yellow);">The timer will commence immediately upon activation.</p>
+      </div>
+      <button class="btn" id="startBtn">ACKNOWLEDGE & START</button>
     </div>
 
     <!-- PHASE 2: Logic Gauntlet -->
     <div class="screen" id="screenLogic">
       <div class="bit-tracker" id="bitTracker"></div>
-      
       <div class="question-container">
         <div class="vars-display" id="varsDisplay"></div>
         <div class="expr-display" id="exprDisplay"></div>
       </div>
-
       <div class="binary-controls">
         <button class="btn-bin" id="btn0">0</button>
         <button class="btn-bin" id="btn1">1</button>
@@ -325,11 +318,8 @@
     <div class="screen" id="screenHex">
       <h1 style="color: var(--red); margin-bottom: 10px;">DEFUSAL CODE REQUIRED</h1>
       <p style="margin-bottom: 20px;">Convert the 16-bit payload into a 4-digit Hexadecimal code.</p>
-      
       <div class="hex-display" id="finalBinaryDisplay">0000 0000 0000 0000</div>
-      
       <div class="hex-input-box" id="hexInputBox"></div>
-
       <div class="hex-keypad">
         <button class="key">0</button><button class="key">1</button><button class="key">2</button><button class="key">3</button>
         <button class="key">4</button><button class="key">5</button><button class="key">6</button><button class="key">7</button>
@@ -343,36 +333,22 @@
     <!-- PHASE 4: Leaderboard -->
     <div class="screen" id="screenLeaderboard">
       <h1 style="color: var(--yellow); margin-bottom: 10px;">GLOBAL DEFUSAL LOGS</h1>
-      <div class="sync-status" id="syncStatus">Fetching secure data from mainframe...</div>
-      
+      <p id="syncStatus" style="color: var(--cyan); margin-bottom: 20px;">Fetching secure data...</p>
       <table id="leaderboardTable">
         <thead>
-          <tr>
-            <th>RANK</th>
-            <th>TEAM</th>
-            <th>TIME</th>
-            <th>PENALTIES</th>
-            <th>SCORE</th>
-          </tr>
+          <tr><th>RANK</th><th>TEAM</th><th>TIME</th><th>PENALTIES</th><th>SCORE</th></tr>
         </thead>
-        <tbody id="leaderboardBody">
-        </tbody>
+        <tbody id="leaderboardBody"></tbody>
       </table>
-      
       <button class="btn" id="newTeamBtn" style="margin-top: 30px; background: #262626;">REGISTER NEW TEAM</button>
     </div>
 
   </div>
 
   <script>
-    // =========================================================
-    // INSERT YOUR GOOGLE SHEETS WEB APP URL HERE:
-    // =========================================================
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9rVb7ZGw9fvGw5C5qlkhggO6Mnzn5y5UF7gHd-Of6UOicEjFTx1ue97bteBUY8pZYlA/exec";
 
-    // ---------------------------------------------------------
-    // 1. QUESTION BANK SETUP (6-Variable Deep Nesting)
-    // ---------------------------------------------------------
+    // 6-Variable Deep Nesting Bank
     const fullQuestionBank = [
       { vars: { A: 1, B: 0, C: 1, D: 0, E: 1, F: 1 }, expr: "((A XOR B) NAND (C NOR D)) XNOR (E AND F)", ans: 1 },
       { vars: { A: 0, B: 0, C: 1, D: 1, E: 0, F: 1 }, expr: "NOT(A OR B) XOR ((C AND D) NAND (E NOR F))", ans: 0 },
@@ -396,27 +372,18 @@
       { vars: { A: 0, B: 1, C: 0, D: 1, E: 1, F: 0 }, expr: "((A NOR B) NAND (C AND D)) XNOR ((E XOR F) OR A)", ans: 1 }
     ];
 
-    // ---------------------------------------------------------
-    // 2. STATE MANAGEMENT
-    // ---------------------------------------------------------
     let currentTeam = "";
     let activeQuestions = [];
     let currentIndex = 0;
     let gatheredBits = "";
     
-    // Timer & Scoring
     let timerInterval;
     let timeElapsedInHundredths = 0; 
     let penaltyCount = 0;
     const TOTAL_BITS = 16;
-    const TIME_PENALTY_MS = 1500; // Adds 15 seconds
+    const TIME_PENALTY_MS = 3000; // Updated to 30 seconds (3000 hundredths)
 
-    // ---------------------------------------------------------
-    // 3. CORE LOGIC
-    // ---------------------------------------------------------
-    function shuffleArray(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
+    function shuffleArray(array) { return array.sort(() => Math.random() - 0.5); }
 
     function switchScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -430,13 +397,37 @@
       return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${millis.toString().padStart(2, '0')}`;
     }
 
-    function startGame() {
+    function showPenaltyPopup() {
+      const container = document.querySelector('.timer-container');
+      const pop = document.createElement('div');
+      pop.className = 'penalty-pop';
+      pop.innerText = '+30 SEC';
+      container.appendChild(pop);
+      
+      // Clean up DOM after animation finishes
+      setTimeout(() => { pop.remove(); }, 1000);
+    }
+
+    function triggerErrorFeedback() {
+      penaltyCount++;
+      timeElapsedInHundredths += TIME_PENALTY_MS;
+      showPenaltyPopup();
+      
+      const container = document.getElementById('mainContainer');
+      container.classList.remove('shake');
+      void container.offsetWidth;
+      container.classList.add('shake');
+    }
+
+    document.getElementById('proceedBtn').addEventListener('click', () => {
       const input = document.getElementById('teamNameInput').value.trim();
       if (!input) { alert("ENTER TEAM NAME TO PROCEED"); return; }
-      
       currentTeam = input.toUpperCase();
       document.getElementById('teamBadgeDisplay').innerText = `TEAM: ${currentTeam}`;
-      
+      switchScreen('screenBriefing');
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
       activeQuestions = shuffleArray([...fullQuestionBank]).slice(0, TOTAL_BITS);
       currentIndex = 0;
       gatheredBits = "";
@@ -453,7 +444,7 @@
 
       loadNextQuestion();
       switchScreen('screenLogic');
-    }
+    });
 
     function renderBitTracker() {
       const tracker = document.getElementById('bitTracker');
@@ -475,43 +466,27 @@
 
     function loadNextQuestion() {
       const currentQ = activeQuestions[currentIndex];
-      
       const varsDiv = document.getElementById('varsDisplay');
       varsDiv.innerHTML = '';
       for (const [key, value] of Object.entries(currentQ.vars)) {
         varsDiv.innerHTML += `<div class="var-box">${key} = ${value}</div>`;
       }
-
       document.getElementById('exprDisplay').innerText = currentQ.expr;
     }
 
     function handleBinaryInput(guess) {
       const currentQ = activeQuestions[currentIndex];
-
       if (guess === currentQ.ans) {
         gatheredBits += guess.toString();
         renderBitTracker();
         currentIndex++;
-
-        if (currentIndex >= TOTAL_BITS) {
-          prepareHexDefusal();
-        } else {
-          loadNextQuestion();
-        }
+        if (currentIndex >= TOTAL_BITS) { prepareHexDefusal(); } 
+        else { loadNextQuestion(); }
       } else {
-        penaltyCount++;
-        timeElapsedInHundredths += TIME_PENALTY_MS;
-        
-        const container = document.getElementById('mainContainer');
-        container.classList.remove('shake');
-        void container.offsetWidth;
-        container.classList.add('shake');
+        triggerErrorFeedback();
       }
     }
 
-    // ---------------------------------------------------------
-    // 4. HEXADECIMAL STAGE
-    // ---------------------------------------------------------
     function prepareHexDefusal() {
       document.getElementById('hexInputBox').innerText = "";
       const formattedBinary = gatheredBits.match(/.{1,4}/g).join(" ");
@@ -521,9 +496,7 @@
 
     function handleHexKeypad(key) {
       const box = document.getElementById('hexInputBox');
-      if (box.innerText.length < 4) {
-        box.innerText += key;
-      }
+      if (box.innerText.length < 4) { box.innerText += key; }
     }
 
     async function checkHexCode() {
@@ -531,10 +504,8 @@
       if (inputHex.length !== 4) return;
 
       const correctHex = parseInt(gatheredBits, 2).toString(16).toUpperCase().padStart(4, '0'); 
-
       if (inputHex === correctHex) {
         clearInterval(timerInterval);
-        
         const submitBtn = document.getElementById('keySubmit');
         submitBtn.innerText = "UPLOADING DATA...";
         submitBtn.disabled = true;
@@ -543,82 +514,54 @@
         
         submitBtn.innerText = "DEFUSE BOMB";
         submitBtn.disabled = false;
-
         renderLeaderboard();
         switchScreen('screenLeaderboard');
       } else {
-        penaltyCount++;
-        timeElapsedInHundredths += TIME_PENALTY_MS;
         document.getElementById('hexInputBox').innerText = "";
-        
-        const container = document.getElementById('mainContainer');
-        container.classList.remove('shake');
-        void container.offsetWidth;
-        container.classList.add('shake');
+        triggerErrorFeedback();
       }
     }
 
-    // ---------------------------------------------------------
-    // 5. GOOGLE SHEETS API SYNC
-    // ---------------------------------------------------------
     function calculateScore() {
-      let score = 10000 - timeElapsedInHundredths - (penaltyCount * 1500);
+      // Adjusted score math: Base 10,000 - time - (penalties * 3000)
+      let score = 10000 - timeElapsedInHundredths - (penaltyCount * 3000);
       return Math.max(0, score);
     }
 
     async function saveScoreToDatabase() {
       const payload = {
+        secret: "ROBOTICS2026",
         team: currentTeam,
         time: formatTime(timeElapsedInHundredths),
         rawTime: timeElapsedInHundredths,
         penalties: penaltyCount,
         score: calculateScore()
       };
-
       if (SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL_HERE") return;
-
       try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify(payload)
-        });
-      } catch (error) {
-        console.error("Failed to upload score", error);
-      }
+        await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+      } catch (error) { console.error("Failed to upload score", error); }
     }
 
     async function renderLeaderboard() {
       const tbody = document.getElementById('leaderboardBody');
       const syncText = document.getElementById('syncStatus');
-      
       tbody.innerHTML = '';
-      syncText.innerText = "Fetching secure data from mainframe...";
-      syncText.style.color = "var(--cyan)";
-
+      syncText.innerText = "Fetching secure data...";
       if (SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_URL_HERE") {
         tbody.innerHTML = '<tr><td colspan="5" style="color:var(--yellow);">OFFLINE MODE. ADD API URL.</td></tr>';
-        syncText.innerText = "Local mode active.";
         return;
       }
-      
       try {
         const response = await fetch(SCRIPT_URL);
         const leaderboard = await response.json();
-
         if (!leaderboard || leaderboard.length === 0) {
           tbody.innerHTML = '<tr><td colspan="5">NO SECURE LOGS FOUND</td></tr>';
-          syncText.innerText = "Sync complete. Awaiting signals.";
           return;
         }
-
         leaderboard.forEach((entry, idx) => {
-          let rankClass = "";
-          if (idx === 0) rankClass = "rank-1";
-          if (idx === 1) rankClass = "rank-2";
-          if (idx === 2) rankClass = "rank-3";
-
           tbody.innerHTML += `
-            <tr class="${rankClass}">
+            <tr>
               <td>${idx + 1}</td>
               <td>${entry.team}</td>
               <td>${entry.time}</td>
@@ -627,30 +570,19 @@
             </tr>
           `;
         });
-        
         syncText.innerText = "LIVE CONNECTION ESTABLISHED";
         syncText.style.color = "var(--green)";
-
       } catch (error) {
-        tbody.innerHTML = '<tr><td colspan="5" style="color:red;">MAINFRAME CONNECTION FAILED</td></tr>';
-        syncText.innerText = "OFFLINE. Check API URL.";
-        syncText.style.color = "var(--red)";
+        tbody.innerHTML = '<tr><td colspan="5" style="color:red;">CONNECTION FAILED</td></tr>';
       }
     }
 
-    // ---------------------------------------------------------
-    // 6. EVENT LISTENERS
-    // ---------------------------------------------------------
-    document.getElementById('startBtn').addEventListener('click', startGame);
+    // Input Listeners
     document.getElementById('btn0').addEventListener('click', () => handleBinaryInput(0));
     document.getElementById('btn1').addEventListener('click', () => handleBinaryInput(1));
-
     document.querySelectorAll('.key').forEach(btn => {
-      if (!btn.id) {
-        btn.addEventListener('click', (e) => handleHexKeypad(e.target.innerText));
-      }
+      if (!btn.id) btn.addEventListener('click', (e) => handleHexKeypad(e.target.innerText));
     });
-    
     document.getElementById('keyClear').addEventListener('click', () => document.getElementById('hexInputBox').innerText = "");
     document.getElementById('keySubmit').addEventListener('click', checkHexCode);
 
@@ -659,19 +591,14 @@
         if (e.key === '0') handleBinaryInput(0);
         if (e.key === '1') handleBinaryInput(1);
       }
-      
       if (document.getElementById('screenHex').classList.contains('active')) {
         const hexChars = "0123456789ABCDEFabcdef";
-        if (hexChars.includes(e.key)) {
-          handleHexKeypad(e.key.toUpperCase());
-        }
+        if (hexChars.includes(e.key)) handleHexKeypad(e.key.toUpperCase());
         if (e.key === 'Backspace') {
           const box = document.getElementById('hexInputBox');
           box.innerText = box.innerText.slice(0, -1);
         }
-        if (e.key === 'Enter') {
-          checkHexCode();
-        }
+        if (e.key === 'Enter') checkHexCode();
       }
     });
 
